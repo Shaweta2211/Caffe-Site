@@ -1,10 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 const categories = ["All Categories", "Perch Fish", "Lobster", "Shrimps", "Red Crab"];
 
-export default function MenuFilterSection({ selectedCategory, setSelectedCategory }) {
+// Define the props type
+interface MenuFilterSectionProps {
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+}
+
+export default function MenuFilterSection({
+  selectedCategory,
+  setSelectedCategory,
+}: MenuFilterSectionProps) {
   return (
     <div className="text-center py-10 bg-[#fff9f5]">
       {/* Small Heading */}

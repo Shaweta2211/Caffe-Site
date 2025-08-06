@@ -1,7 +1,20 @@
 "use client";
 import Image from "next/image";
 
-export default function TeamMemberCard({ member, isActive }) {
+// Define the type of member object
+interface TeamMember {
+  image: string;
+  name: string;
+  role: string;
+}
+
+// Define props for the component
+interface TeamMemberCardProps {
+  member: TeamMember;
+  isActive: boolean;
+}
+
+export default function TeamMemberCard({ member, isActive }: TeamMemberCardProps) {
   return (
     <div className="rounded-lg overflow-hidden bg-white shadow-md transform transition-transform hover:scale-105 mt-8">
       <div className="w-full h-72 relative">
