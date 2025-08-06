@@ -1,20 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+interface FormErrors {
+  phone: string;
+}
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone: "",
     message: "",
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<FormErrors>({
     phone: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     if (name === "phone") {
@@ -36,7 +49,7 @@ export default function ContactForm() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (formData.phone.length !== 10) {
@@ -48,95 +61,82 @@ export default function ContactForm() {
     }
 
     alert("Form submitted successfully!");
-    console.log(formData);
+    console.log("Submitted Data:", formData);
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8 flex flex-col lg:flex-row gap-6">
-      {/* Contact Form */}
-      <div className="w-full lg:w-1/2">
-        <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <div className="flex flex-col lg:flex-row gap-10 items-start">
+        {/* Contact Form */}
+        <div className="w-full lg:w-1/2 bg-white p-6 shadow-md rounded-md h-[500px] flex flex-col justify-between"> {/* ✅ Match map height */}
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 rounded"
-            />
+            <h2 className="text-2xl font-semibold mb-6">Contact Us</h2>
+            <form onSubmit={handleSubmit} className="space-y-5"> {/* ✅ Increased spacing */}
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-3 rounded mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-3 rounded mt-2  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-3 rounded mt-2  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+              {errors.phone && (
+                <p className="text-red-500 text-sm">{errors.phone}</p>
+              )}
+
+              <textarea
+                name="message"
+                placeholder="Message"
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-3 rounded mt-2  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={4}
+                required
+              />
+
+              <button
+                type="submit"
+                className="bg-red-600 hover:bg-gray-700 text-white mt-2  py-2 px-4 rounded transition duration-200"
+              >
+                Submit
+              </button>
+            </form>
           </div>
+        </div>
 
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 rounded"
-            />
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Phone (10 digits only)
-            </label>
-            <input
-              type="text"
-              name="phone"
-              required
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 rounded"
-              maxLength={10}
-              pattern="\d{10}"
-              placeholder="Enter 10-digit number"
-            />
-            {errors.phone && (
-              <p className="text-red-600 text-sm mt-1">{errors.phone}</p>
-            )}
-          </div>
-
-          {/* Message */}
-          <div>
-            <label className="block text-sm font-medium mb-1">Message</label>
-            <textarea
-              name="message"
-              required
-              rows={4}
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 rounded"
-            />
-          </div>
-
-          {/* Submit */}
-          <button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-
-      {/* Map */}
-      <div className="w-full lg:w-1/2 h-[500px]">
-        <iframe
-          src="https://www.google.com/maps?q=delhi&output=embed"
-          width="100%"
-          height="100%"
-          allowFullScreen=""
-          loading="lazy"
-          className="rounded shadow-md border"
-        ></iframe>
+        {/* Location / Map */}
+        <div className="w-full lg:w-1/2 h-[500px]"> {/* ✅ Equal height */}
+          <iframe
+            src="https://www.google.com/maps?q=New+Delhi&output=embed"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            loading="lazy"
+            allowFullScreen
+            className="rounded shadow-md"
+          ></iframe>
+        </div>
       </div>
     </div>
   );
