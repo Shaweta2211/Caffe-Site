@@ -148,6 +148,7 @@ export default function Footer() {
                 >
                   <IconComponent />
                 </a>
+
               ) : null;
             })}
           </div>

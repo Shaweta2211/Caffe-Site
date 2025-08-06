@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import BootstrapClient from "./bootstrap-client"; 
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Header } from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -31,10 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <BootstrapClient /> {/* 👈 Include Bootstrap JS client-side */}
-        <Header/>
+        <Header />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

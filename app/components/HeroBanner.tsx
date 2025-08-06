@@ -30,7 +30,7 @@ export default function HeroBanner() {
         <p className="mt-4 text-lg md:text-xl">
           Call Us: +99 698 569 565
         </p>
-        <Link href="/menu">
+        <Link href="/gallery">
         <button className="mt-6 px-6 py-3 bg-red-600 hover:bg-gray-700 text-white rounded-lg text-lg transition">
           Discover More
         </button>

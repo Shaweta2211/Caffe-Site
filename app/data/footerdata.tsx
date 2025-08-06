@@ -23,8 +23,8 @@ export const instagramImages = [
 ];
 
 export const socialIcons = [
-    { icon: "facebook", url: "#" },
-    { icon: "twitter", url: "#" },
-    { icon: "skype", url: "#" },
-    { icon: "instagram", url: "#" },
+    { icon: "facebook", url: "https://www.facebook.com/yourpage" },
+    { icon: "twitter", url: "https://twitter.com/yourprofile" },
+    { icon: "skype", url: "skype:your.skype.id?chat" }, // opens Skype chat
+    { icon: "instagram", url: "https://www.instagram.com/yourprofile" },
 ];
