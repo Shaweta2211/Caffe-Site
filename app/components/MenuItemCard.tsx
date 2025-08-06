@@ -1,8 +1,10 @@
 "use client";
+
 import React from "react";
-import Image from "next/image";
 import { MenuItem } from "../menu/type";
-import { Heart, ShoppingCart, Eye, Star } from "lucide-react"; // ✅ Import Star
+import Image from "next/image";
+import { Heart, ShoppingCart, Eye } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -19,50 +21,49 @@ export default function MenuItemCard({
   onLike,
   onSee,
 }: MenuItemCardProps) {
+  const handleAddToCart = async () => {
+    try {
+      onAddToCart(item);
+      toast.success("✅ Added to cart!");
+    } catch (error) {
+      toast.error("❌ Failed to add to cart.");
+    }
+  };
+
   return (
-    <div className="bg-white shadow-lg rounded p-4">
-      <img
-        src={item.image}
-        alt={item.title}
-        className="w-full h-40 object-cover rounded cursor-pointer"
-        onClick={() => onSee(item)} // <-- opens modal
-      />
-
-      <h3 className="text-lg font-semibold mt-2">{item.title}</h3>
-
-      {/* ⭐️ Star Rating Display Below Title */}
-      <div className="flex items-center space-x-1 mt-1">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <Star
-            key={index}
-            className={`w-4 h-4 ${
-              item.rating && item.rating >= index + 1
-                ? "text-yellow-400"
-                : "text-gray-300"
-            }`}
-            fill={
-              item.rating && item.rating >= index + 1 ? "#facc15" : "none"
-            }
-          />
-        ))}
-        <span className="text-sm text-gray-600 ml-1">
-          ({item.rating ?? "N/A"})
-        </span>
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+      {/* ✅ Full-width image with fill */}
+      <div className="relative w-full h-48">
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          className="object-cover w-full h-full"
+        />
       </div>
 
-      <p className="text-sm text-gray-600">{item.description}</p>
-      <p className="text-md font-bold mt-2">₹{item.price}</p>
-
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={() => onAddToCart(item)}
-          className="bg-black text-white px-3 py-1 rounded"
-        >
-          Add to Cart
-        </button>
-        <button onClick={() => onLike(item)}>
-          {isLiked ? "❤️" : "🤍"}
-        </button>
+      {/* ✅ Text and actions */}
+      <div className="p-4">
+        <h3 className="text-lg font-bold">{item.title}</h3>
+        <p className="text-gray-600 text-sm mt-1">{item.description}</p>
+        <div className="flex items-center justify-between mt-4">
+          <span className="text-lg font-semibold text-red-500">
+            ₹{item.price}
+          </span>
+          <div className="flex items-center gap-2">
+            <button onClick={() => onLike(item)}>
+              <Heart color={isLiked ? "red" : "gray"}
+                fill={isLiked ? "red" : "none"}        
+                className="cursor-pointer" />
+            </button>
+            <button onClick={() => onSee(item)}>
+              <Eye />
+            </button>
+            <button onClick={handleAddToCart}>
+              <ShoppingCart />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

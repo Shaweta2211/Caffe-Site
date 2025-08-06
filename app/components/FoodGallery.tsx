@@ -31,7 +31,7 @@ export default function FoodGallery() {
               key={cat}
               onClick={() => {
                 setSelectedCategory(cat);
-                setShowAll(false); // reset on filter
+                setShowAll(false); 
               }}
               className={`cursor-pointer pb-1 ${
                 selectedCategory === cat
